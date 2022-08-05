@@ -21,15 +21,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Hola" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fbtnReturn"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
-
         <ImageView
             android:id="@+id/ivSplashPhoto"
             app:circularflow_defaultRadius="16dp"

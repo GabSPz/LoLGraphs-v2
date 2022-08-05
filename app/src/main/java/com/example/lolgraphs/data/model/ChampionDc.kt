@@ -1,11 +1,9 @@
 package com.example.lolgraphs.data.model
 
-import com.example.lolgraphs.data.model.subModel.ImageChamp
-import com.example.lolgraphs.data.model.subModel.Info
-import com.example.lolgraphs.data.model.subModel.Skins
-import com.example.lolgraphs.data.model.subModel.Stats
+import com.example.lolgraphs.data.model.subModel.*
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import javax.inject.Singleton
 
 
 data class ChampionDc(
@@ -19,8 +17,10 @@ data class ChampionDc(
     @SerializedName("info") var info: Info,
     @SerializedName("image") var image: ImageChamp,
     @SerializedName("skins") var skins:List<Skins>,
-    @SerializedName("enemytips") var enemyTips:List<String>,
-    @SerializedName("tags") var tags:List<String>,
+    @SerializedName("enemytips") var enemyTips:List<EnemyTips>,
+    @SerializedName("tags") var tags:List<Tags>,
     @SerializedName("partype") var partype:String,
     @SerializedName("stats") var stats: Stats,
-) : Serializable
+) : Serializable {
+
+}

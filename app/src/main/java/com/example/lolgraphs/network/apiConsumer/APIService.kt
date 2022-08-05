@@ -6,6 +6,10 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface APIService {
-    @GET("champion{query}json")
-         suspend fun getAllChamp(@Path("query") query :String):Response<ChampResponse>
+    @GET("champion.json")
+        suspend fun getAllChamp(): Response<ChampResponse>
+
+
+    @GET("champion/{query}.json")
+        suspend fun getOnlyChamp(@Path("query") query :String):Response<ChampResponse>
 }
