@@ -51,9 +51,9 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener    {
             champViewModel.onCreate()
             runOnUiThread {
                 champViewModel.champModel.observe(this@MainActivity, Observer {
-                    val prev = it?.toMutableMap() ?: emptyMap()
+                    val champs = it?.toMutableMap() ?: emptyMap()
                     championMap.clear()
-                    championMap.putAll(prev)
+                    championMap.putAll(champs)
                     initRecycleView(championMap)
                     adapter.notifyDataSetChanged()
                     binding.recycleChamps.isVisible = true
