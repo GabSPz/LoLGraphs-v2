@@ -16,9 +16,9 @@ data class ChampionDc(
     @SerializedName("lore") var lore:String,
     @SerializedName("info") var info: Info,
     @SerializedName("image") var image: ImageChamp,
-    @SerializedName("skins") var skins:List<Skins>,
-    @SerializedName("enemytips") var enemyTips:List<EnemyTips>,
-    @SerializedName("tags") var tags:List<Tags>,
+    @SerializedName("skins") var skins:List<Skins>?,
+    @SerializedName("enemytips") var enemyTips:List<String>?,
+    @SerializedName("tags") var tags:List<String>,
     @SerializedName("partype") var partype:String,
     @SerializedName("stats") var stats: Stats,
 ) : Serializable {

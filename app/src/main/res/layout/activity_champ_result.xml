@@ -2,14 +2,15 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cbFav"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="12dp"
-    >
+    android:layout_margin="12dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/tVChampName"
             android:layout_width="wrap_content"
@@ -23,10 +24,10 @@
 
         <ImageView
             android:id="@+id/ivSplashPhoto"
-            app:circularflow_defaultRadius="16dp"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginVertical="16dp"
+            app:circularflow_defaultRadius="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tVChampName"
@@ -47,13 +48,13 @@
 
         <TextView
             android:id="@+id/tvSkins"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:textColor="#171717"
             android:text="Skins"
+            android:textColor="#171717"
             android:textSize="35sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvChampLore" />
@@ -69,16 +70,16 @@
 
         <TextView
             android:id="@+id/tvEnemyTips"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#171717"
             android:layout_marginTop="20dp"
-            android:textSize="35sp"
             android:text="Tips"
+            android:textColor="#171717"
+            android:textSize="35sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvSkins"/>
+            app:layout_constraintTop_toBottomOf="@+id/rvSkins" />
 
         <TextView
             android:id="@+id/tvEnemyTips1"
@@ -112,10 +113,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@android:drawable/btn_star"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
