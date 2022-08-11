@@ -71,10 +71,10 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener    {
 
     private fun onItemSelected(champion: ChampModel){
         //go to champ result
-        val intent = Intent(this, ChampResultActivity::class.java).apply {
+        val intente = Intent(this, ChampResultActivity::class.java).apply {
             putExtra("namechamp",champion.name)
         }
-        startActivity(intent)
+        startActivity(intente)
     }
 
     private fun showError(){
