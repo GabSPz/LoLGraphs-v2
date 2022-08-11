@@ -1,16 +1,14 @@
 package com.example.lolgraphs.ui.viewModel
 
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.Ignore
 import com.example.lolgraphs.data.model.ChampionDc
 import com.example.lolgraphs.domain.GetChampUseCase
+import com.example.lolgraphs.domain.favoritemodel.ChampFavoriteModel
 import com.example.lolgraphs.domain.model.ChampModel
-import com.example.lolgraphs.network.apiConsumer.Responses.ChampResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +19,7 @@ class ChampViewModel @Ignore @Inject constructor(
 
     val champModel = MutableLiveData< Map<String, ChampModel> >()
     val champDc = MutableLiveData< Map<String, ChampionDc> >()
-
+    val champFav = MutableLiveData< List<ChampFavoriteModel> >()
     val isLoading = MutableLiveData<Boolean>()
 
     fun onCreate (){
@@ -46,9 +44,19 @@ class ChampViewModel @Ignore @Inject constructor(
         }
     }
 
-    fun sendItemSelected(){
-
+    fun sendFavoriteChamp(fav: Boolean, champFavoriteModel: ChampFavoriteModel){
+        viewModelScope.launch {
+            if (fav){
+                val resultFav =getChampUseCase.getFavoriteChamp()
+                champFav.postValue(resultFav)
+                println(resultFav)
+            }else{
+                getChampUseCase.deleteChamp()
+            }
+        }
     }
+
+    //fun viewFavoriteChamp()
 
 
 }

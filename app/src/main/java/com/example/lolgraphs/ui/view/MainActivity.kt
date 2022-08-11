@@ -44,8 +44,6 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener    {
 
     }
 
-
-
     private fun callServiceGetUsers() {
         CoroutineScope(Dispatchers.IO).launch {
             champViewModel.onCreate()
@@ -71,10 +69,10 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener    {
 
     private fun onItemSelected(champion: ChampModel){
         //go to champ result
-        val intente = Intent(this, ChampResultActivity::class.java).apply {
+        val intent = Intent(this, ChampResultActivity::class.java).apply {
             putExtra("namechamp",champion.name)
         }
-        startActivity(intente)
+        startActivity(intent)
     }
 
     private fun showError(){
@@ -82,7 +80,6 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener    {
     }
 
     //When the user use the search view, we coding the backend
-
 
     private fun searchChampionById(query: String){
         val champModel = championMap[query]

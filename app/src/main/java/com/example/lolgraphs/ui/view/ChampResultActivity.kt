@@ -14,6 +14,8 @@ import com.example.lolgraphs.data.model.ChampionDc
 import com.example.lolgraphs.data.model.subModel.Skins
 import com.example.lolgraphs.ui.view.adapter.adapterPerChamp.ChampSelectAdapter
 import com.example.lolgraphs.databinding.ActivityChampResultBinding
+import com.example.lolgraphs.domain.favoritemodel.ChampFavoriteModel
+import com.example.lolgraphs.domain.favoritemodel.toFavorite
 import com.example.lolgraphs.domain.model.submodel.SkinsModel
 import com.example.lolgraphs.ui.viewModel.ChampViewModel
 import com.squareup.picasso.Picasso
@@ -35,7 +37,7 @@ class ChampResultActivity : AppCompatActivity() {
         championViewModel.isLoading.observe(this@ChampResultActivity, Observer {
             binding.progressChamp.isVisible = it
             binding.tvSkins.isVisible = !it
-
+            binding.cvFavorite.isVisible = !it
         })
         getDataChamp()
     }
@@ -49,6 +51,7 @@ class ChampResultActivity : AppCompatActivity() {
         Picasso.get().load("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${championDc.id}_0.jpg").into(binding.ivSplashPhoto)
         binding.tVChampName.text= championDc.name
         binding.tvChampLore.text = championDc.lore
+        binding.cvFavorite.setOnClickListener { checkFavorite(championDc.toFavorite()) }
 
         if (championDc.enemyTips?.size!! > 1){
             binding.tvEnemyTips.isVisible = true
@@ -84,5 +87,17 @@ class ChampResultActivity : AppCompatActivity() {
                 })
             }
          }
+    }
+
+    private fun checkFavorite(champFavoriteModel: ChampFavoriteModel){
+        if (binding.cvFavorite.isChecked){
+            championViewModel.sendFavoriteChamp(true, champFavoriteModel)
+            championViewModel.champFav.observe(this@ChampResultActivity, Observer {
+                it.toMutableList().add(champFavoriteModel)
+            })
+            Toast.makeText(this,"Guardando en Favoritos",Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(this,"Eliminando de Favoritos",Toast.LENGTH_SHORT).show()
+        }
     }
 }

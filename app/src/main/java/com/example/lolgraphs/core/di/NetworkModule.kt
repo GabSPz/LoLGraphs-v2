@@ -1,6 +1,6 @@
 package com.example.lolgraphs.core.di
 
-import com.example.lolgraphs.network.apiConsumer.APIService
+import com.example.lolgraphs.data.network.apiConsumer.APIService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +22,7 @@ object NetworkModule {
             .build()
     }
 
-    //@Singleton
+    @Singleton
     @Provides
     fun provideApiService(retrofit: Retrofit):APIService {
         return retrofit.create(APIService::class.java)

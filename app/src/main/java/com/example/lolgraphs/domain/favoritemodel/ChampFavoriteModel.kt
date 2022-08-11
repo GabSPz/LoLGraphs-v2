@@ -1,17 +1,24 @@
 package com.example.lolgraphs.domain.favoritemodel
 
-//import com.example.lolgraphs.data.database.entities.ChampEntity
-//
-//data class ChampFavoriteModel(
-//    var version : String,
-//    var champId : String,
-//    var key : String,
-//    var name : String
-//)
-//
-//fun ChampEntity.toFavorite() = ChampFavoriteModel(
-//    version,
-//    champId,
-//    key,
-//    name
-//)
+import com.example.lolgraphs.data.db.entities.ChampEntity
+import com.example.lolgraphs.data.model.ChampionDc
+
+data class ChampFavoriteModel(
+    val name : String,
+    val id: String
+)
+
+fun ChampEntity.toFavorite() = ChampFavoriteModel(
+    name =  name,
+    id = id
+)
+
+fun ChampFavoriteModel.toDatabase() = ChampEntity(
+    name = name,
+    id = id
+)
+
+fun ChampionDc.toFavorite() = ChampFavoriteModel(
+    name = name,
+    id = id
+)
