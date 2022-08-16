@@ -1,0 +1,151 @@
+package com.example.lolgraphs.ui.view.fragments.home
+
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.Intent
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.isVisible
+import androidx.core.view.size
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.lolgraphs.databinding.FragmentHomeBinding
+import com.example.lolgraphs.domain.model.ChampModel
+import com.example.lolgraphs.ui.view.ChampResultActivity
+import com.example.lolgraphs.ui.view.adapter.ChampAdapter
+import com.example.lolgraphs.ui.viewModel.ChampViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
+
+    private var _binding: FragmentHomeBinding? = null
+    private lateinit var champViewModel: ChampViewModel
+
+    private val championMap = mutableMapOf<String, ChampModel>()
+    private lateinit var adapter: ChampAdapter
+
+
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        champViewModel =
+           ViewModelProvider(this).get(ChampViewModel::class.java)
+
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        binding.svChamps.setOnQueryTextListener(this)
+        callServiceGetUsers()
+
+        return root
+        //champViewModel.isLoading.observe(this, Observer {
+        //    binding.progress.isVisible = it
+        //})
+    }
+        //binding.svChamps.setOnQueryTextListener(this)
+        //
+        private fun callServiceGetUsers() {
+            CoroutineScope(Dispatchers.IO).launch {
+                champViewModel.onCreate()
+
+                activity?.runOnUiThread {
+                    champViewModel.champModel.observe(
+                        viewLifecycleOwner, Observer {
+                            val champs = it?.toMutableMap() ?: emptyMap()
+                            championMap.clear()
+                            championMap.putAll(champs)
+                            initRecycleView(championMap)
+                            adapter.notifyDataSetChanged()
+                            binding.recycleChamps.isVisible = true
+                            binding.svChamps.isVisible = true
+                        }
+                    )
+                }
+            }
+        }
+
+        private fun initRecycleView(map: Map<String,ChampModel>){
+            adapter = ChampAdapter(map){champion -> onItemSelected(champion)}
+            binding.recycleChamps.layoutManager = LinearLayoutManager(this.context)
+            binding.recycleChamps.adapter = adapter
+        }
+
+        private fun onItemSelected(champion: ChampModel){
+            //go to champ result
+            val intent = Intent(this.context, ChampResultActivity::class.java).apply {
+                putExtra("namechamp",champion.name)
+            }
+            startActivity(intent)
+        }
+
+        private fun showError(){
+            Toast.makeText(this@HomeFragment.context, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
+        }
+
+        //When the user use the search view, we coding the backend
+
+        private fun searchChampionById(query: String){
+            val champModel = championMap[query]
+            if (!champModel?.id.isNullOrEmpty()) {
+                championMap.clear()
+                championMap[query]
+                initRecycleView(championMap)
+                adapter.notifyDataSetChanged()
+
+            }else{
+                showError()
+            }
+            //hideKeyBoard()
+        }
+
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            if (!query.isNullOrEmpty()){
+                val upperQuery = query.first().uppercase()
+                val lowerQuery = query.lowercase()
+                val finalQuery = lowerQuery.replaceFirstChar { upperQuery }
+                searchChampionById(finalQuery)
+            }
+            return true
+        }
+
+        override fun onQueryTextChange(newText: String?): Boolean {
+            if (newText.isNullOrEmpty()){
+                if (binding.recycleChamps.size == 1) {
+                    binding.recycleChamps.isVisible = false
+                    callServiceGetUsers()
+                }
+            }
+            return true
+        }
+
+    //private fun hideKeyBoard(){
+        //val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        //imm.hideSoftInputFromWindow(binding.container.windowToken, 0)
+    //}
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}
+
+
+

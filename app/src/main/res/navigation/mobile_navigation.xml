@@ -7,12 +7,14 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.lolgraphs.ui.view.fragments.HomeFragment"
+        android:name="com.example.lolgraphs.ui.view.fragments.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
+
     <fragment
         android:id="@+id/navigation_favorites"
-        android:name="com.example.lolgraphs.ui.view.fragments.FavoritesFragment"
-        android:label=  "@string/title_favorites"
-        tools:layout="@layout/fragment_favorites"/>
+        android:name="com.example.lolgraphs.ui.view.fragments.favorites.FavoritesFragment"
+        android:label="@string/title_favorites"
+        tools:layout="@layout/fragment_favorites" />
+
 </navigation>

@@ -29,7 +29,7 @@ class ChampResultActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChampResultBinding
     private val championViewModel : ChampViewModel by viewModels()
-    val Context.dataStore by preferencesDataStore("USER_DS")
+    //val Context.dataStore by preferencesDataStore("USER_DS")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChampResultBinding.inflate(layoutInflater)
