@@ -9,12 +9,9 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,8 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
@@ -54,93 +50,93 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         val root: View = binding.root
 
         binding.svChamps.setOnQueryTextListener(this)
+        champViewModel.isLoading.observe(viewLifecycleOwner, Observer {
+            binding.progress.isVisible = it
+        })
         callServiceGetUsers()
-
         return root
-        //champViewModel.isLoading.observe(this, Observer {
-        //    binding.progress.isVisible = it
-        //})
     }
-        //binding.svChamps.setOnQueryTextListener(this)
-        //
-        private fun callServiceGetUsers() {
-            CoroutineScope(Dispatchers.IO).launch {
-                champViewModel.onCreate()
 
-                activity?.runOnUiThread {
-                    champViewModel.champModel.observe(
-                        viewLifecycleOwner, Observer {
-                            val champs = it?.toMutableMap() ?: emptyMap()
-                            championMap.clear()
-                            championMap.putAll(champs)
-                            initRecycleView(championMap)
-                            adapter.notifyDataSetChanged()
-                            binding.recycleChamps.isVisible = true
-                            binding.svChamps.isVisible = true
-                        }
-                    )
-                }
+    private fun callServiceGetUsers() {
+        CoroutineScope(Dispatchers.IO).launch {
+            champViewModel.onCreate()
+
+            activity?.runOnUiThread {
+                champViewModel.champModel.observe(
+                    viewLifecycleOwner, Observer {
+                        val champs = it?.toMutableMap() ?: emptyMap()
+                        championMap.clear()
+                        championMap.putAll(champs)
+                        initRecycleView(championMap)
+                        adapter.notifyDataSetChanged()
+                        binding.recycleChamps.isVisible = true
+                        binding.svChamps.isVisible = true
+                    }
+                )
             }
         }
+    }
 
-        private fun initRecycleView(map: Map<String,ChampModel>){
-            adapter = ChampAdapter(map){champion -> onItemSelected(champion)}
-            binding.recycleChamps.layoutManager = LinearLayoutManager(this.context)
-            binding.recycleChamps.adapter = adapter
+    private fun initRecycleView(map: Map<String,ChampModel>){
+        adapter = ChampAdapter(map){champion -> onItemSelected(champion)}
+        binding.recycleChamps.layoutManager = LinearLayoutManager(this.context)
+        binding.recycleChamps.adapter = adapter
+    }
+
+    private fun onItemSelected(champion: ChampModel){
+        //go to champ result
+        val intent = Intent(this.context, ChampResultActivity::class.java).apply {
+            putExtra("namechamp",champion.name)
         }
+        startActivity(intent)
+    }
 
-        private fun onItemSelected(champion: ChampModel){
-            //go to champ result
-            val intent = Intent(this.context, ChampResultActivity::class.java).apply {
-                putExtra("namechamp",champion.name)
+    private fun showError(){
+        Toast.makeText(this@HomeFragment.context, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
+    }
+
+    //When the user use the search view, we coding the backend
+
+    private fun searchChampionById(query: String){
+        val champModel = championMap[query]
+        if (!champModel?.name.isNullOrEmpty()) {
+            championMap.apply {
+                clear()
+                put(query, champModel!!)
             }
-            startActivity(intent)
+            initRecycleView(championMap)
+            adapter.notifyDataSetChanged()
+
+        }else{
+            showError()
         }
+        hideKeyBoard()
+    }
 
-        private fun showError(){
-            Toast.makeText(this@HomeFragment.context, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (!query.isNullOrEmpty()){
+            val upperQuery = query.first().uppercase()
+            val finalQuery = query.lowercase().replaceFirstChar { upperQuery }
+            searchChampionById(finalQuery)
         }
+        return true
+    }
 
-        //When the user use the search view, we coding the backend
-
-        private fun searchChampionById(query: String){
-            val champModel = championMap[query]
-            if (!champModel?.id.isNullOrEmpty()) {
-                championMap.clear()
-                championMap[query]
-                initRecycleView(championMap)
-                adapter.notifyDataSetChanged()
-
-            }else{
-                showError()
+    override fun onQueryTextChange(newText: String?): Boolean {
+        if (newText.isNullOrEmpty()){
+            if (binding.recycleChamps.size == 1) {
+                binding.recycleChamps.isVisible = false
+                callServiceGetUsers()
+                hideKeyBoard()
             }
-            //hideKeyBoard()
         }
+        return true
+    }
 
-        override fun onQueryTextSubmit(query: String?): Boolean {
-            if (!query.isNullOrEmpty()){
-                val upperQuery = query.first().uppercase()
-                val lowerQuery = query.lowercase()
-                val finalQuery = lowerQuery.replaceFirstChar { upperQuery }
-                searchChampionById(finalQuery)
-            }
-            return true
-        }
-
-        override fun onQueryTextChange(newText: String?): Boolean {
-            if (newText.isNullOrEmpty()){
-                if (binding.recycleChamps.size == 1) {
-                    binding.recycleChamps.isVisible = false
-                    callServiceGetUsers()
-                }
-            }
-            return true
-        }
-
-    //private fun hideKeyBoard(){
-        //val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        //imm.hideSoftInputFromWindow(binding.container.windowToken, 0)
-    //}
+    private fun hideKeyBoard(){
+        val imm = activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.container.windowToken, 0)
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
