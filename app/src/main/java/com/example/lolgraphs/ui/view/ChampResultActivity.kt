@@ -1,12 +1,10 @@
 package com.example.lolgraphs.ui.view
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,9 +12,8 @@ import com.example.lolgraphs.data.model.ChampionDc
 import com.example.lolgraphs.data.model.subModel.Skins
 import com.example.lolgraphs.ui.view.adapter.adapterPerChamp.ChampSelectAdapter
 import com.example.lolgraphs.databinding.ActivityChampResultBinding
-import com.example.lolgraphs.domain.favoritemodel.ChampFavoriteModel
-import com.example.lolgraphs.domain.favoritemodel.toFavorite
-import com.example.lolgraphs.domain.model.submodel.SkinsModel
+import com.example.lolgraphs.domain.model.ChampModel
+import com.example.lolgraphs.domain.model.toDomain
 import com.example.lolgraphs.ui.viewModel.ChampViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,7 +48,7 @@ class ChampResultActivity : AppCompatActivity() {
         Picasso.get().load("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${championDc.id}_0.jpg").into(binding.ivSplashPhoto)
         binding.tVChampName.text= championDc.name
         binding.tvChampLore.text = championDc.lore
-        binding.cvFavorite.setOnClickListener { checkFavorite(championDc.toFavorite()) }
+        binding.cvFavorite.setOnClickListener { checkFavorite(championDc.toDomain()) }
 
         if (championDc.enemyTips?.size!! > 1){
             binding.tvEnemyTips.isVisible = true
@@ -62,6 +59,7 @@ class ChampResultActivity : AppCompatActivity() {
 
     private fun initRecycleView(champModel: ChampionDc){
         inputInfo(champModel)
+
         //binding champModel with the rvSkins
         binding.rvSkins.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL,false)
         binding.rvSkins.adapter =
@@ -89,11 +87,11 @@ class ChampResultActivity : AppCompatActivity() {
          }
     }
 
-    private fun checkFavorite(champFavoriteModel: ChampFavoriteModel){
+    private fun checkFavorite(champModel: ChampModel){
         if (binding.cvFavorite.isChecked){
-            championViewModel.sendFavoriteChamp(true, champFavoriteModel)
+            championViewModel.sendFavoriteChamp(true)
             championViewModel.champFav.observe(this@ChampResultActivity, Observer {
-                it.toMutableList().add(champFavoriteModel)
+                it.toMutableMap().put(champModel.name,champModel)
             })
             Toast.makeText(this,"Guardando en Favoritos",Toast.LENGTH_SHORT).show()
         }else{

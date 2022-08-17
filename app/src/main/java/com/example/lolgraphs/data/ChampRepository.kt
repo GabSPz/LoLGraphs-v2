@@ -5,7 +5,6 @@ import com.example.lolgraphs.data.db.dao.ChampDao
 import com.example.lolgraphs.data.db.entities.ChampEntity
 import com.example.lolgraphs.data.model.ChampionDc
 import com.example.lolgraphs.domain.favoritemodel.ChampFavoriteModel
-import com.example.lolgraphs.domain.favoritemodel.toFavorite
 import com.example.lolgraphs.domain.model.ChampModel
 import com.example.lolgraphs.domain.model.toDomain
 import com.example.lolgraphs.data.network.apiConsumer.ChampService
@@ -28,9 +27,9 @@ class ChampRepository @Inject constructor (
         return response//.mapValues { it.component2().toDomain() }
     }
 
-    suspend fun getFavoriteChamp():List<ChampFavoriteModel>{
+    suspend fun getFavoriteChamp():List<ChampModel>{
         val response = champDao.getAllFavoriteChamps()
-        return response.map { it.toFavorite() }
+        return response.map { it.toDomain() }
     }
 
     suspend fun insertFavoriteChamps(champs : List<ChampEntity>){

@@ -1,18 +1,20 @@
 package com.example.lolgraphs.domain.model
 
+import com.example.lolgraphs.data.db.entities.ChampEntity
 import com.example.lolgraphs.data.model.ChampionDc
 import com.example.lolgraphs.data.model.subModel.ImageChamp
 import com.example.lolgraphs.data.model.subModel.Info
 import com.example.lolgraphs.data.model.subModel.Skins
+import com.example.lolgraphs.domain.favoritemodel.ChampFavoriteModel
 import com.example.lolgraphs.domain.model.submodel.*
 import kotlinx.coroutines.flow.emptyFlow
 
 
 data class ChampModel(
-    val version:String,
+    //val version:String,
     val id:String,
-    val key:String,
-    val name:String,
+    //val key:String,
+    val name:String
     ////val title:String,
     ////val blurb:String,
     //val lore:String,
@@ -26,9 +28,8 @@ data class ChampModel(
 )
 
 fun ChampionDc.toDomain() = ChampModel(
-    version ,
+    //version ,
     id,
-    key,
     name
     //title,
     //blurb,
@@ -42,7 +43,16 @@ fun ChampionDc.toDomain() = ChampModel(
     //statsToDomain()
 
 )
+fun ChampEntity.toDomain() = ChampModel(
+    name =  name,
+    id = id
+)
 
+fun ChampModel.toDatabase() = ChampEntity(
+    name = name,
+    id = id
+)
+/*
 fun ChampionDc.infoToDomain(info:Info) = InfoModel(
     info.attack,
     info.defense,
@@ -86,7 +96,7 @@ fun ChampionDc.enemytipsToDomain(list : List<String>?):List<String>{
 
 //champ entity
 
-/*
+
 fun ChampEntity.toDomain() = ChampModel(
     version!!,
     champId!!,
