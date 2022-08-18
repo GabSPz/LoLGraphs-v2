@@ -21,9 +21,13 @@ class GetChampUseCase @Inject constructor(private val  repository: ChampReposito
 
     }
 
-    suspend fun getFavoriteChamp(): List<ChampModel>{
-        val champs = repository.getFavoriteChamp()
-        repository.insertFavoriteChamps(champs.map { it.toDatabase() })
+    suspend fun getFavoriteChamp(): Map<String, ChampModel>{
+        val champs = mutableMapOf<String, ChampModel>()
+        val champsToDb = repository.getFavoriteChamp()
+        repository.insertFavoriteChamps(champsToDb.map { it.toDatabase() })
+        champsToDb.forEach{
+            champs.put(it.name, it)
+        }
         return champs
     }
 

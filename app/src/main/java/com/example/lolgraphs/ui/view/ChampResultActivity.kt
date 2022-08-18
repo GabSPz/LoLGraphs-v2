@@ -89,7 +89,7 @@ class ChampResultActivity : AppCompatActivity() {
 
     private fun checkFavorite(champModel: ChampModel){
         if (binding.cvFavorite.isChecked){
-            championViewModel.sendFavoriteChamp(true)
+            championViewModel.onFavoriteChamp(true)
             championViewModel.champFav.observe(this@ChampResultActivity, Observer {
                 it.toMutableMap().put(champModel.name,champModel)
             })

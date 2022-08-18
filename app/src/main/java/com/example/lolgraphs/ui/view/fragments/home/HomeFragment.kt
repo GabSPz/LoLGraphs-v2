@@ -81,7 +81,8 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         adapter = ChampAdapter(map){champion -> onItemSelected(champion)}
         binding.recycleChamps.layoutManager = LinearLayoutManager(this.context)
         binding.recycleChamps.adapter = adapter
-    }
+
+        }
 
     private fun onItemSelected(champion: ChampModel){
         //go to champ result

@@ -8,6 +8,7 @@ import com.example.lolgraphs.data.model.ChampionDc
 import com.example.lolgraphs.domain.GetChampUseCase
 import com.example.lolgraphs.domain.favoritemodel.ChampFavoriteModel
 import com.example.lolgraphs.domain.model.ChampModel
+import com.example.lolgraphs.domain.model.toDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -45,14 +46,13 @@ class ChampViewModel @Inject constructor(
         }
     }
 
-    fun sendFavoriteChamp(fav: Boolean){
+    fun onFavoriteChamp(fav: Boolean){
         viewModelScope.launch {
             if (fav){
-                val champMap = mutableMapOf<String,ChampModel>()
+                //val champMap = mutableMapOf<String,ChampModel>()
                 val resultFav =getChampUseCase.getFavoriteChamp()
-                champMap.putAll(resultFav.associateBy { it.name })
-                champFav.postValue(champMap)
-                println(champMap)
+                champFav.postValue(resultFav)
+                //println(champMap)
             }else{
                 getChampUseCase.deleteChamp()
             }
