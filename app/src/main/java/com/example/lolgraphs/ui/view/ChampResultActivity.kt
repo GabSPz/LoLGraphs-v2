@@ -37,6 +37,7 @@ class ChampResultActivity : AppCompatActivity() {
             binding.cvFavorite.isVisible = !it
         })
         getDataChamp()
+
     }
     private fun getDataChamp(){
         val bundle = intent.extras
@@ -49,7 +50,6 @@ class ChampResultActivity : AppCompatActivity() {
         binding.tVChampName.text= championDc.name
         binding.tvChampLore.text = championDc.lore
         binding.cvFavorite.setOnClickListener { checkFavorite(championDc.toDomain()) }
-
         if (championDc.enemyTips?.size!! > 1){
             binding.tvEnemyTips.isVisible = true
             binding.tvEnemyTips1.text = championDc.enemyTips!!.first().toString()
@@ -89,10 +89,10 @@ class ChampResultActivity : AppCompatActivity() {
 
     private fun checkFavorite(champModel: ChampModel){
         if (binding.cvFavorite.isChecked){
-            championViewModel.onFavoriteChamp(true)
-            championViewModel.champFav.observe(this@ChampResultActivity, Observer {
-                it.toMutableMap().put(champModel.name,champModel)
-            })
+            championViewModel.onFavoriteChamp(true, champModel)
+            //championViewModel.champFav.observe(this@ChampResultActivity, Observer {
+            //    it.toMutableMap().put(champModel.name,champModel)
+            //})
             Toast.makeText(this,"Guardando en Favoritos",Toast.LENGTH_SHORT).show()
         }else{
             Toast.makeText(this,"Eliminando de Favoritos",Toast.LENGTH_SHORT).show()

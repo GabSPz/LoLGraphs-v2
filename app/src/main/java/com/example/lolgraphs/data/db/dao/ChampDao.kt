@@ -13,7 +13,7 @@ interface ChampDao {
     suspend fun getAllFavoriteChamps():List<ChampEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(champsFav:List<ChampEntity>)
+    suspend fun insertAll(champsFav:ChampEntity)
 
     @Query ("DELETE FROM champ_table")
     suspend fun deleteAllChamp()

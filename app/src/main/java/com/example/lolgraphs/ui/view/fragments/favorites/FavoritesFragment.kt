@@ -75,6 +75,7 @@ class FavoritesFragment : Fragment() {
     private fun getFavoriteChamp (){
         champViewModel.champFav.observe(viewLifecycleOwner, Observer {
             championMap.putAll(it)
+            println(it)
             initRecycleView(championMap)
             binding.rvFavorites.isVisible = true
         })

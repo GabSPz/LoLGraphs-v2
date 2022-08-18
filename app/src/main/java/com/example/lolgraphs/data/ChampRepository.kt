@@ -32,7 +32,7 @@ class ChampRepository @Inject constructor (
         return response.map { it.toDomain() }
     }
 
-    suspend fun insertFavoriteChamps(champs : List<ChampEntity>){
+    suspend fun insertFavoriteChamps(champs : ChampEntity){
         champDao.insertAll(champs)
     }
 
