@@ -52,7 +52,16 @@ class ChampResultActivity : AppCompatActivity() {
         Picasso.get().load("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${championDc.id}_0.jpg").into(binding.ivSplashPhoto)
         binding.tVChampName.text= championDc.name
         binding.tvChampLore.text = championDc.lore
-        binding.cvFavorite.setOnClickListener { checkFavorite(championDc.toDomain()) }
+
+        championViewModel.champFav.observe(this, Observer {
+            val checkChamp = it[championDc.name]
+            if (checkChamp?.name.isNullOrEmpty()){
+                binding.cvFavorite.setOnClickListener { checkFavorite(championDc.toDomain()) }
+
+            }else{
+                binding.cvFavorite.isActivated
+            }
+        })
         if (championDc.enemyTips?.size!! > 1){
             binding.tvEnemyTips.isVisible = true
             binding.tvEnemyTips1.text = championDc.enemyTips!!.first().toString()
@@ -91,10 +100,11 @@ class ChampResultActivity : AppCompatActivity() {
     }
 
     private fun checkFavorite(champModel: ChampModel){
+
         if (binding.cvFavorite.isChecked){
 
-            sendChampion(champModel)
-            //championViewModel.onFavoriteChamp(true, champModel)
+            //sendChampion(champModel)
+            championViewModel.onFavoriteChamp(true, champModel)
             //championViewModel.champFav.observe(this@ChampResultActivity, Observer {
             //    it.toMutableMap().put(champModel.name,champModel)
             //})
