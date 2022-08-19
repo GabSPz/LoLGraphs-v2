@@ -27,7 +27,7 @@ class ChampRepository @Inject constructor (
         return response//.mapValues { it.component2().toDomain() }
     }
 
-    suspend fun getFavoriteChamp():List<ChampModel>{
+    suspend fun getFavoriteChampOfDb():List<ChampModel>{
         val response = champDao.getAllFavoriteChamps()
         return response.map { it.toDomain() }
     }

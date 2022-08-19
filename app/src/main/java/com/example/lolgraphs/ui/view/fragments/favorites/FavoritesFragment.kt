@@ -46,11 +46,7 @@ class FavoritesFragment : Fragment() {
         champViewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding.pbFavorite.isVisible = it
         })
-        getFavoriteChamp()
-        if (championMap.isEmpty()){
-            binding.rvFavorites.isVisible = false
-            showText()
-        }
+        getDataChamp()
         return root
     }
     private fun initRecycleView(map: Map<String,ChampModel>){
@@ -70,15 +66,29 @@ class FavoritesFragment : Fragment() {
 
     private fun showText(){
         binding.tvNoFavorites.isVisible = true
+        println()
     }
-
-    private fun getFavoriteChamp (){
+    private fun getDataChamp(){
+        val bundle = activity?.intent?.extras
+        val champData = bundle?.get("allChamp") as ChampModel
+        getFavoriteChamp(champData)
+    }
+    private fun getFavoriteChamp (champModel: ChampModel){
+        champViewModel.onFavoriteChamp(true, champModel)
         champViewModel.champFav.observe(viewLifecycleOwner, Observer {
-            championMap.putAll(it)
-            println(it)
+            val champs = it?.toMutableMap() ?: emptyMap()
+            championMap.clear()
+            championMap.putAll(champs)
             initRecycleView(championMap)
-            binding.rvFavorites.isVisible = true
+            adapter.notifyDataSetChanged()
         })
+        //if (championMap.isEmpty()){
+        //    binding.rvFavorites.isVisible = false
+        //    showText()
+        //}else{
+        //    initRecycleView(championMap)
+        //    binding.rvFavorites.isVisible = true
+        //}
     }
 
     override fun onDestroyView() {

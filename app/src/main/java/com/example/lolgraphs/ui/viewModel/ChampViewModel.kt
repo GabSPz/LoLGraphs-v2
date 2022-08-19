@@ -49,10 +49,8 @@ class ChampViewModel @Inject constructor(
     fun onFavoriteChamp(fav: Boolean, champModel: ChampModel){
         viewModelScope.launch {
             if (fav){
-                //val champMap = mutableMapOf<String,ChampModel>()
                 val resultFav =getChampUseCase.getFavoriteChamp(champModel)
                 champFav.postValue(resultFav)
-                //println(champMap)
             }else{
                 getChampUseCase.deleteChamp()
             }

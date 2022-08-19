@@ -1,5 +1,6 @@
 package com.example.lolgraphs.ui.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -12,6 +13,7 @@ import com.example.lolgraphs.data.model.ChampionDc
 import com.example.lolgraphs.data.model.subModel.Skins
 import com.example.lolgraphs.ui.view.adapter.adapterPerChamp.ChampSelectAdapter
 import com.example.lolgraphs.databinding.ActivityChampResultBinding
+import com.example.lolgraphs.databinding.FragmentFavoritesBinding
 import com.example.lolgraphs.domain.model.ChampModel
 import com.example.lolgraphs.domain.model.toDomain
 import com.example.lolgraphs.ui.viewModel.ChampViewModel
@@ -20,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.Serializable
 
 @AndroidEntryPoint
 class ChampResultActivity : AppCompatActivity() {
@@ -89,13 +92,21 @@ class ChampResultActivity : AppCompatActivity() {
 
     private fun checkFavorite(champModel: ChampModel){
         if (binding.cvFavorite.isChecked){
-            championViewModel.onFavoriteChamp(true, champModel)
+
+            sendChampion(champModel)
+            //championViewModel.onFavoriteChamp(true, champModel)
             //championViewModel.champFav.observe(this@ChampResultActivity, Observer {
             //    it.toMutableMap().put(champModel.name,champModel)
             //})
             Toast.makeText(this,"Guardando en Favoritos",Toast.LENGTH_SHORT).show()
         }else{
             Toast.makeText(this,"Eliminando de Favoritos",Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun sendChampion (champModel: ChampModel){
+        Intent(this, FragmentFavoritesBinding::class.java).apply {
+            putExtra("allChamp",champModel as Serializable)
         }
     }
 }
