@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lolgraphs.R
 import com.example.lolgraphs.domain.model.ChampModel
 
-class ChampAdapter(private val champList: Map<String, ChampModel>, private val onCLick: (ChampModel) -> Unit):RecyclerView.Adapter<ChampViewHolder>() {
+class ChampAdapter(private var champList: Map<String, ChampModel>, private var onCLick: (ChampModel) -> Unit):RecyclerView.Adapter<ChampViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChampViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return ChampViewHolder(layoutInflater.inflate(R.layout.activity_item_result, parent, false))

@@ -19,6 +19,9 @@ import com.example.lolgraphs.ui.view.ChampResultActivity
 import com.example.lolgraphs.ui.view.adapter.ChampAdapter
 import com.example.lolgraphs.ui.viewModel.ChampViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FavoritesFragment : Fragment() {
@@ -66,18 +69,27 @@ class FavoritesFragment : Fragment() {
 
     private fun showText(){
         binding.tvNoFavorites.isVisible = true
-        println()
     }
 
     private fun getFavoriteChamp (){
-        //champViewModel.onFavoriteChamp(true, champModel)
-        champViewModel.champFav.observe(viewLifecycleOwner, Observer {
-            val champs = it?.toMutableMap() ?: emptyMap()
-            championMap.clear()
-            championMap.putAll(champs)
-            initRecycleView(championMap)
-            adapter.notifyDataSetChanged()
-        })
+        CoroutineScope(Dispatchers.IO).launch {
+            champViewModel.getFavoriteChamp()
+
+            activity?.runOnUiThread {
+                champViewModel.champFav.observe(viewLifecycleOwner, Observer {
+                    val champs = it?.toMutableMap() ?: emptyMap()
+                    if (champs.isNotEmpty()) {
+                        championMap.clear()
+                        championMap.putAll(champs)
+                        initRecycleView(championMap)
+                        adapter.notifyDataSetChanged()
+                    }else{
+                        showText()
+                    }
+                })
+            }
+
+        }
         //if (championMap.isEmpty()){
         //    binding.rvFavorites.isVisible = false
         //    showText()

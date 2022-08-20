@@ -61,7 +61,8 @@ class ChampViewModel @Inject constructor(
     }
 
     suspend fun getFavoriteChamp (){
-        val result = getFavoriteChampUseCase.getFavoriteChamp()
+        val result = getFavoriteChampUseCase.getChampsOfDatabase()
+        champFav.postValue(result)
     }
 
 
