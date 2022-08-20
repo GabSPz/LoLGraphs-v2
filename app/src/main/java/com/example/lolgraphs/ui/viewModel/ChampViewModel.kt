@@ -6,17 +6,20 @@ import androidx.lifecycle.viewModelScope
 import androidx.room.Ignore
 import com.example.lolgraphs.data.model.ChampionDc
 import com.example.lolgraphs.domain.GetChampUseCase
+import com.example.lolgraphs.domain.GetFavoriteChampUseCase
 import com.example.lolgraphs.domain.favoritemodel.ChampFavoriteModel
 import com.example.lolgraphs.domain.model.ChampModel
 import com.example.lolgraphs.domain.model.toDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.reflect.typeOf
 
 @HiltViewModel
 class ChampViewModel @Inject constructor(
-    private val getChampUseCase :GetChampUseCase
+    private val getChampUseCase :GetChampUseCase,
+    private val getFavoriteChampUseCase: GetFavoriteChampUseCase
     ): ViewModel() {
 
     val champModel = MutableLiveData< Map<String, ChampModel> >()
@@ -49,12 +52,16 @@ class ChampViewModel @Inject constructor(
     fun onFavoriteChamp(fav: Boolean, champModel: ChampModel){
         viewModelScope.launch {
             if (fav){
-                val resultFav =getChampUseCase.getFavoriteChamp(champModel)
+                val resultFav =getFavoriteChampUseCase.getFavoriteChamp(champModel)
                 champFav.postValue(resultFav)
             }else{
-                getChampUseCase.deleteChamp()
+                getFavoriteChampUseCase.deleteChamp()
             }
         }
+    }
+
+    suspend fun getFavoriteChamp (){
+        val result = getFavoriteChampUseCase.getFavoriteChamp()
     }
 
 

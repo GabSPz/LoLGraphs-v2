@@ -53,13 +53,10 @@ class ChampResultActivity : AppCompatActivity() {
         binding.tVChampName.text= championDc.name
         binding.tvChampLore.text = championDc.lore
 
+        binding.cvFavorite.setOnClickListener { checkFavorite(championDc.toDomain()) }
         championViewModel.champFav.observe(this, Observer {
-            val checkChamp = it[championDc.name]
-            if (checkChamp?.name.isNullOrEmpty()){
-                binding.cvFavorite.setOnClickListener { checkFavorite(championDc.toDomain()) }
-
-            }else{
-                binding.cvFavorite.isActivated
+            if (!it[championDc.name]?.name.isNullOrEmpty()){
+                binding.cvFavorite.isChecked = true
             }
         })
         if (championDc.enemyTips?.size!! > 1){
@@ -102,9 +99,8 @@ class ChampResultActivity : AppCompatActivity() {
     private fun checkFavorite(champModel: ChampModel){
 
         if (binding.cvFavorite.isChecked){
-
-            //sendChampion(champModel)
             championViewModel.onFavoriteChamp(true, champModel)
+            //sendChampion(champModel)
             //championViewModel.champFav.observe(this@ChampResultActivity, Observer {
             //    it.toMutableMap().put(champModel.name,champModel)
             //})
@@ -113,6 +109,17 @@ class ChampResultActivity : AppCompatActivity() {
             Toast.makeText(this,"Eliminando de Favoritos",Toast.LENGTH_SHORT).show()
         }
     }
+
+   // private fun champCheck (champModel: ChampModel){
+   //     championViewModel.champFav.observe(this, Observer {
+   //         val checkChamp = it[champModel.name]
+   //         if (checkChamp?.name.isNullOrEmpty()){
+//
+   //         }else{
+   //             binding.cvFavorite.isActivated = true
+   //         }
+   //     })
+   // }
 
     private fun sendChampion (champModel: ChampModel){
         Intent(this, FragmentFavoritesBinding::class.java).apply {

@@ -10,4 +10,5 @@ data class ChampEntity (
     @ColumnInfo (name = "uid")val uid: Int = 0,
     @ColumnInfo(name = "name") val name : String,
     @ColumnInfo (name = "id") val id : String
+
     )

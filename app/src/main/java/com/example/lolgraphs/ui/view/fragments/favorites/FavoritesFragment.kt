@@ -46,7 +46,7 @@ class FavoritesFragment : Fragment() {
         champViewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding.pbFavorite.isVisible = it
         })
-        getDataChamp()
+        getFavoriteChamp()
         return root
     }
     private fun initRecycleView(map: Map<String,ChampModel>){
@@ -68,13 +68,9 @@ class FavoritesFragment : Fragment() {
         binding.tvNoFavorites.isVisible = true
         println()
     }
-    private fun getDataChamp(){
-        val bundle = activity?.intent?.extras
-        val champData = bundle?.get("allChamp") as ChampModel
-        getFavoriteChamp(champData)
-    }
-    private fun getFavoriteChamp (champModel: ChampModel){
-        champViewModel.onFavoriteChamp(true, champModel)
+
+    private fun getFavoriteChamp (){
+        //champViewModel.onFavoriteChamp(true, champModel)
         champViewModel.champFav.observe(viewLifecycleOwner, Observer {
             val champs = it?.toMutableMap() ?: emptyMap()
             championMap.clear()
