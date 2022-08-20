@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lolgraphs.R
 import com.example.lolgraphs.domain.model.ChampModel
+import com.example.lolgraphs.ui.view.fragments.home.HomeFragment
 
 class ChampAdapter(private var champList: Map<String, ChampModel>, private var onCLick: (ChampModel) -> Unit):RecyclerView.Adapter<ChampViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChampViewHolder {

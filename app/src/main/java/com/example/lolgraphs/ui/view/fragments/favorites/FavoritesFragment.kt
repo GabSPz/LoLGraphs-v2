@@ -53,10 +53,10 @@ class FavoritesFragment : Fragment() {
         return root
     }
     private fun initRecycleView(map: Map<String,ChampModel>){
+        binding.rvFavorites.isVisible = true
         adapter = ChampAdapter(map){champion -> onItemSelected(champion)}
-        binding.rvFavorites.layoutManager = LinearLayoutManager(this.context)
+        binding.rvFavorites.layoutManager = LinearLayoutManager(this@FavoritesFragment.context)
         binding.rvFavorites.adapter = adapter
-
     }
 
     private fun onItemSelected(champion: ChampModel){
@@ -88,15 +88,7 @@ class FavoritesFragment : Fragment() {
                     }
                 })
             }
-
         }
-        //if (championMap.isEmpty()){
-        //    binding.rvFavorites.isVisible = false
-        //    showText()
-        //}else{
-        //    initRecycleView(championMap)
-        //    binding.rvFavorites.isVisible = true
-        //}
     }
 
     override fun onDestroyView() {

@@ -9,7 +9,7 @@ import com.example.lolgraphs.data.db.entities.ChampEntity
 @Dao
 interface ChampDao {
 
-    @Query("SELECT * FROM champ_table ORDER BY name DESC")
+    @Query("SELECT * FROM champ_table ORDER BY name ASC")
     suspend fun getAllFavoriteChamps():List<ChampEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

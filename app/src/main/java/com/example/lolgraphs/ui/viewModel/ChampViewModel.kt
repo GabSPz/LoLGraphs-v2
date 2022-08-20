@@ -26,6 +26,7 @@ class ChampViewModel @Inject constructor(
     val champDc = MutableLiveData< Map<String, ChampionDc> >()
     val champFav = MutableLiveData< Map<String, ChampModel> >()
     val isLoading = MutableLiveData<Boolean>()
+    val isLoadingFav = MutableLiveData<Boolean>()
 
     fun onCreate (){
         viewModelScope.launch {
@@ -61,8 +62,10 @@ class ChampViewModel @Inject constructor(
     }
 
     suspend fun getFavoriteChamp (){
+        isLoadingFav.postValue(true)
         val result = getFavoriteChampUseCase.getChampsOfDatabase()
         champFav.postValue(result)
+        isLoadingFav.postValue(false)
     }
 
 

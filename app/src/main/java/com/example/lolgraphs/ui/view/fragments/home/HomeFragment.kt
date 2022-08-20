@@ -79,7 +79,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun initRecycleView(map: Map<String,ChampModel>){
         adapter = ChampAdapter(map){champion -> onItemSelected(champion)}
-        binding.recycleChamps.layoutManager = LinearLayoutManager(this.context)
+        binding.recycleChamps.layoutManager = LinearLayoutManager(this@HomeFragment.context)
         binding.recycleChamps.adapter = adapter
 
         }
@@ -107,7 +107,6 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
             }
             initRecycleView(championMap)
             adapter.notifyDataSetChanged()
-
         }else{
             showError()
         }
