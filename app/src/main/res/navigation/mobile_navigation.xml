@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/navigation_favorites"
         android:name="com.example.lolgraphs.ui.view.fragments.favorites.FavoritesFragment"
-        android:label="@string/title_favorites"
+        android:label="@string/title_favoritos"
         tools:layout="@layout/fragment_favorites" />
 
 </navigation>
