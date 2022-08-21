@@ -41,6 +41,7 @@ class ChampResultActivity : AppCompatActivity() {
         })
         getDataChamp()
 
+
     }
     private fun getDataChamp(){
         val bundle = intent.extras
@@ -54,11 +55,7 @@ class ChampResultActivity : AppCompatActivity() {
         binding.tvChampLore.text = championDc.lore
 
         binding.cvFavorite.setOnClickListener { checkFavorite(championDc.toDomain()) }
-        championViewModel.champFav.observe(this, Observer {
-            if (!it[championDc.name]?.name.isNullOrEmpty()){
-                binding.cvFavorite.isChecked = true
-            }
-        })
+        favoriteCheck(championDc.toDomain())
         if (championDc.enemyTips?.size!! > 1){
             binding.tvEnemyTips.isVisible = true
             binding.tvEnemyTips1.text = championDc.enemyTips!!.first().toString()
@@ -100,26 +97,28 @@ class ChampResultActivity : AppCompatActivity() {
 
         if (binding.cvFavorite.isChecked){
             championViewModel.onFavoriteChamp(true, champModel)
-            //sendChampion(champModel)
-            //championViewModel.champFav.observe(this@ChampResultActivity, Observer {
-            //    it.toMutableMap().put(champModel.name,champModel)
-            //})
             Toast.makeText(this,"Guardando en Favoritos",Toast.LENGTH_SHORT).show()
         }else{
             Toast.makeText(this,"Eliminando de Favoritos",Toast.LENGTH_SHORT).show()
         }
     }
 
-   // private fun champCheck (champModel: ChampModel){
-   //     championViewModel.champFav.observe(this, Observer {
-   //         val checkChamp = it[champModel.name]
-   //         if (checkChamp?.name.isNullOrEmpty()){
-//
-   //         }else{
-   //             binding.cvFavorite.isActivated = true
-   //         }
-   //     })
-   // }
+    private fun favoriteCheck (champModel: ChampModel){
+        CoroutineScope(Dispatchers.IO).launch {
+            championViewModel.getFavoriteChamp()
+
+            runOnUiThread {
+                championViewModel.champFav.observe(this@ChampResultActivity, Observer {
+                    val checkChamp = it[champModel.name]
+                    if (checkChamp?.name.isNullOrEmpty()) {
+                        //nothing
+                    } else {
+                        binding.cvFavorite.isChecked = true
+                    }
+                })
+            }
+        }
+    }
 
     private fun sendChampion (champModel: ChampModel){
         Intent(this, FragmentFavoritesBinding::class.java).apply {
