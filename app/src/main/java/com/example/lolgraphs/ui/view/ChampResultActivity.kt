@@ -54,8 +54,8 @@ class ChampResultActivity : AppCompatActivity() {
         binding.tVChampName.text= championDc.name
         binding.tvChampLore.text = championDc.lore
 
-        binding.cvFavorite.setOnClickListener { checkFavorite(championDc.toDomain()) }
-        favoriteCheck(championDc.toDomain())
+        binding.cvFavorite.setOnClickListener { sendFavorite(championDc.toDomain()) }
+        favoriteCheckBox(championDc.toDomain())
         if (championDc.enemyTips?.size!! > 1){
             binding.tvEnemyTips.isVisible = true
             binding.tvEnemyTips1.text = championDc.enemyTips!!.first().toString()
@@ -64,8 +64,6 @@ class ChampResultActivity : AppCompatActivity() {
     }
 
     private fun initRecycleView(champModel: ChampionDc){
-        inputInfo(champModel)
-
         //binding champModel with the rvSkins
         binding.rvSkins.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL,false)
         binding.rvSkins.adapter =
@@ -87,23 +85,25 @@ class ChampResultActivity : AppCompatActivity() {
                         val champMap = result.toMutableMap()
                         val champModel = champMap.values.toTypedArray()[0]
                         initRecycleView(champModel)
+                        inputInfo(champModel)
                     }
                 })
             }
          }
     }
 
-    private fun checkFavorite(champModel: ChampModel){
+    private fun sendFavorite(champModel: ChampModel){
 
         if (binding.cvFavorite.isChecked){
             championViewModel.onFavoriteChamp(true, champModel)
             Toast.makeText(this,"Guardando en Favoritos",Toast.LENGTH_SHORT).show()
         }else{
+            championViewModel.onFavoriteChamp(false, champModel)
             Toast.makeText(this,"Eliminando de Favoritos",Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun favoriteCheck (champModel: ChampModel){
+    private fun favoriteCheckBox (champModel: ChampModel){
         CoroutineScope(Dispatchers.IO).launch {
             championViewModel.getFavoriteChamp()
 
@@ -117,12 +117,6 @@ class ChampResultActivity : AppCompatActivity() {
                     }
                 })
             }
-        }
-    }
-
-    private fun sendChampion (champModel: ChampModel){
-        Intent(this, FragmentFavoritesBinding::class.java).apply {
-            putExtra("allChamp",champModel as Serializable)
         }
     }
 }

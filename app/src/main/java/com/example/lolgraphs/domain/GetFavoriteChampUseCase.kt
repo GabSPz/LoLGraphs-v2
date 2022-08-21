@@ -29,7 +29,7 @@ class GetFavoriteChampUseCase @Inject constructor( private val repository: Champ
         return champs
     }
 
-    suspend fun deleteChamp(){
-        repository.clearChamp()
+    suspend fun deleteChamp(id: String){
+        repository.clearChamp(id)
     }
 }

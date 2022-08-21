@@ -56,7 +56,7 @@ class ChampViewModel @Inject constructor(
                 val resultFav =getFavoriteChampUseCase.getFavoriteChamp(champModel)
                 champFav.postValue(resultFav)
             }else{
-                getFavoriteChampUseCase.deleteChamp()
+                getFavoriteChampUseCase.deleteChamp(champModel.id)
             }
         }
     }

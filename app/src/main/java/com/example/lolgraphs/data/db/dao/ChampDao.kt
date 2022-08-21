@@ -16,5 +16,8 @@ interface ChampDao {
     suspend fun insertAll(champsFav:ChampEntity)
 
     @Query ("DELETE FROM champ_table")
-    suspend fun deleteAllChamp()
+    suspend fun deleteAllChamp(champId:String){
+
+    }
+
 }
