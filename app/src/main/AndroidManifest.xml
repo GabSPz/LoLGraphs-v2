@@ -33,7 +33,7 @@
             android:name=".ui.view.ChampResultActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.view.DetailActivity"
+            android:name=".ui.view.NavigationActivity"
             android:exported="false" />
     </application>
 

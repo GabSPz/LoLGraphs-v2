@@ -1,6 +1,5 @@
 package com.example.lolgraphs.ui.view
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -13,7 +12,6 @@ import com.example.lolgraphs.data.model.ChampionDc
 import com.example.lolgraphs.data.model.subModel.Skins
 import com.example.lolgraphs.ui.view.adapter.adapterPerChamp.ChampSelectAdapter
 import com.example.lolgraphs.databinding.ActivityChampResultBinding
-import com.example.lolgraphs.databinding.FragmentFavoritesBinding
 import com.example.lolgraphs.domain.model.ChampModel
 import com.example.lolgraphs.domain.model.toDomain
 import com.example.lolgraphs.ui.viewModel.ChampViewModel
@@ -22,14 +20,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.Serializable
 
 @AndroidEntryPoint
 class ChampResultActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChampResultBinding
     private val championViewModel : ChampViewModel by viewModels()
-    //val Context.dataStore by preferencesDataStore("USER_DS")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChampResultBinding.inflate(layoutInflater)
@@ -40,12 +37,10 @@ class ChampResultActivity : AppCompatActivity() {
             binding.cvFavorite.isVisible = !it
         })
         getDataChamp()
-
-
     }
     private fun getDataChamp(){
         val bundle = intent.extras
-        val champData = bundle?.get("namechamp") as String
+        val champData = bundle?.get("NAME_CHAMP") as String
         callChamp(champData)
     }
 
@@ -119,5 +114,4 @@ class ChampResultActivity : AppCompatActivity() {
             }
         }
     }
-
-    }
+}

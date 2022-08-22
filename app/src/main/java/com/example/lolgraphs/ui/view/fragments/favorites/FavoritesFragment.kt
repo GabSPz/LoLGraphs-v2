@@ -1,18 +1,15 @@
 package com.example.lolgraphs.ui.view.fragments.favorites
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.lolgraphs.R
 import com.example.lolgraphs.databinding.FragmentFavoritesBinding
 import com.example.lolgraphs.domain.model.ChampModel
 import com.example.lolgraphs.ui.view.ChampResultActivity
@@ -48,7 +45,7 @@ class FavoritesFragment : Fragment() {
         val root: View = binding.root
 
         getFavoriteChamp()
-        champViewModel.isLoading.observe(viewLifecycleOwner, Observer {
+        champViewModel.isLoadingFav.observe(viewLifecycleOwner, Observer {
             binding.pbFavorite.isVisible = it
         })
         return root
@@ -84,7 +81,7 @@ class FavoritesFragment : Fragment() {
     private fun onItemSelected(champion: ChampModel){
         //go to champ result
         val intent = Intent(this.context, ChampResultActivity::class.java).apply {
-            putExtra("namechamp",champion.name)
+            putExtra("NAME_CHAMP",champion.name)
         }
         startActivity(intent)
     }

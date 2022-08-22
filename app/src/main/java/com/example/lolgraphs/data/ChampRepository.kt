@@ -7,7 +7,6 @@ import com.example.lolgraphs.data.model.ChampionDc
 import com.example.lolgraphs.domain.model.ChampModel
 import com.example.lolgraphs.domain.model.toDomain
 import com.example.lolgraphs.data.network.apiConsumer.ChampService
-import com.example.lolgraphs.domain.model.toDatabase
 import javax.inject.Inject
 
 class ChampRepository @Inject constructor (
@@ -18,14 +17,10 @@ class ChampRepository @Inject constructor (
     suspend fun getAllChamps(): Map<String, ChampModel> {
         val response = api.getAllChamps()
         return response.mapValues { it.value.toDomain() }
-
     }
 
     //onChampResultActivity
-    suspend fun getChamp(query: String): Map<String, ChampionDc> {
-        val response = api.getChamp(query)
-        return response//.mapValues { it.component2().toDomain() }
-    }
+    suspend fun getChamp(query: String): Map<String, ChampionDc> = api.getChamp(query)
 
     suspend fun getFavoriteChampOfDb():List<ChampModel>{
         val response = champDao.getAllFavoriteChamps()

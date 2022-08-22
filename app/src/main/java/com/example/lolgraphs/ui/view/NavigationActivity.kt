@@ -12,7 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailActivity : AppCompatActivity() {
+class NavigationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
 

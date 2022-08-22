@@ -92,7 +92,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun onItemSelected(champion: ChampModel){
         //go to champ result
         val intent = Intent(this.context, ChampResultActivity::class.java).apply {
-            putExtra("namechamp",champion.name)
+            putExtra("NAME_CHAMP",champion.name)
         }
         startActivity(intent)
     }
@@ -138,7 +138,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
             println(championMapFilter)
             championMapFilter.values.forEach {
                 if (it.name.lowercase(Locale.getDefault()).contains(searchText)){
-                    championMap.put(it.name, it)
+                    championMap[it.name] = it
                 }
             }
             initRecycleView(championMap)
@@ -151,6 +151,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         val imm = activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.container.windowToken, 0)
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -3,18 +3,14 @@ package com.example.lolgraphs.ui.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Ignore
 import com.example.lolgraphs.data.model.ChampionDc
 import com.example.lolgraphs.domain.GetChampUseCase
 import com.example.lolgraphs.domain.GetFavoriteChampUseCase
-import com.example.lolgraphs.domain.favoritemodel.ChampFavoriteModel
 import com.example.lolgraphs.domain.model.ChampModel
-import com.example.lolgraphs.domain.model.toDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Singleton
-import kotlin.reflect.typeOf
+
 
 @HiltViewModel
 class ChampViewModel @Inject constructor(
