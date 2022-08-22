@@ -4,10 +4,10 @@ package com.example.lolgraphs.data
 import com.example.lolgraphs.data.db.dao.ChampDao
 import com.example.lolgraphs.data.db.entities.ChampEntity
 import com.example.lolgraphs.data.model.ChampionDc
-import com.example.lolgraphs.domain.favoritemodel.ChampFavoriteModel
 import com.example.lolgraphs.domain.model.ChampModel
 import com.example.lolgraphs.domain.model.toDomain
 import com.example.lolgraphs.data.network.apiConsumer.ChampService
+import com.example.lolgraphs.domain.model.toDatabase
 import javax.inject.Inject
 
 class ChampRepository @Inject constructor (
@@ -36,8 +36,8 @@ class ChampRepository @Inject constructor (
         champDao.insertAll(champs)
     }
 
-    suspend fun clearChamp(id:String){
-        champDao.deleteAllChamp()
+    suspend fun clearChamp(champId: String){
+        champDao.deleteAllChamp(champId)
     }
 }
 

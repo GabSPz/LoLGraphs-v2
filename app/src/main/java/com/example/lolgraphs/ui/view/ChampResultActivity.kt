@@ -119,4 +119,5 @@ class ChampResultActivity : AppCompatActivity() {
             }
         }
     }
-}
+
+    }

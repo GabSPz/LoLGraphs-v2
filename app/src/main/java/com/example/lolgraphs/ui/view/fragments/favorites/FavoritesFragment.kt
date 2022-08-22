@@ -1,18 +1,18 @@
 package com.example.lolgraphs.ui.view.fragments.favorites
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.lolgraphs.R
 import com.example.lolgraphs.databinding.FragmentFavoritesBinding
 import com.example.lolgraphs.domain.model.ChampModel
 import com.example.lolgraphs.ui.view.ChampResultActivity
@@ -22,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class FavoritesFragment : Fragment() {
@@ -46,29 +47,11 @@ class FavoritesFragment : Fragment() {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        getFavoriteChamp()
         champViewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding.pbFavorite.isVisible = it
         })
-        getFavoriteChamp()
         return root
-    }
-    private fun initRecycleView(map: Map<String,ChampModel>){
-        binding.rvFavorites.isVisible = true
-        adapter = ChampAdapter(map){champion -> onItemSelected(champion)}
-        binding.rvFavorites.layoutManager = LinearLayoutManager(this@FavoritesFragment.context)
-        binding.rvFavorites.adapter = adapter
-    }
-
-    private fun onItemSelected(champion: ChampModel){
-        //go to champ result
-        val intent = Intent(this.context, ChampResultActivity::class.java).apply {
-            putExtra("namechamp",champion.name)
-        }
-        startActivity(intent)
-    }
-
-    private fun showText(){
-        binding.tvNoFavorites.isVisible = true
     }
 
     private fun getFavoriteChamp (){
@@ -89,6 +72,25 @@ class FavoritesFragment : Fragment() {
                 })
             }
         }
+    }
+
+    private fun initRecycleView(map: Map<String,ChampModel>){
+        binding.rvFavorites.isVisible = true
+        adapter = ChampAdapter(map){champion -> onItemSelected(champion)}
+        binding.rvFavorites.layoutManager = LinearLayoutManager(this@FavoritesFragment.context)
+        binding.rvFavorites.adapter = adapter
+    }
+
+    private fun onItemSelected(champion: ChampModel){
+        //go to champ result
+        val intent = Intent(this.context, ChampResultActivity::class.java).apply {
+            putExtra("namechamp",champion.name)
+        }
+        startActivity(intent)
+    }
+
+    private fun showText(){
+        binding.tvNoFavorites.isVisible = true
     }
 
     override fun onDestroyView() {

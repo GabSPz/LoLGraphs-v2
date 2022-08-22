@@ -1,9 +1,6 @@
 package com.example.lolgraphs.data.db.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.lolgraphs.data.db.entities.ChampEntity
 
 @Dao
@@ -15,6 +12,6 @@ interface ChampDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(champsFav:ChampEntity)
 
-    @Query ("DELETE FROM champ_table ")
-    suspend fun deleteAllChamp()
+    @Query("Delete From champ_table Where id == :champID")
+    suspend fun deleteAllChamp(champID: String)
 }
