@@ -15,9 +15,6 @@ interface ChampDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(champsFav:ChampEntity)
 
-    @Query ("DELETE FROM champ_table")
-    suspend fun deleteAllChamp(champId:String){
-
-    }
-
+    @Query ("DELETE FROM champ_table ")
+    suspend fun deleteAllChamp()
 }

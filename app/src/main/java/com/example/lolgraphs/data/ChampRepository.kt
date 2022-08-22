@@ -37,7 +37,7 @@ class ChampRepository @Inject constructor (
     }
 
     suspend fun clearChamp(id:String){
-        champDao.deleteAllChamp(id)
+        champDao.deleteAllChamp()
     }
 }
 

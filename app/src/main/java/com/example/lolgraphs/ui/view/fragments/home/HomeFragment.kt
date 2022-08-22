@@ -24,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -34,9 +35,11 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private val championMap = mutableMapOf<String, ChampModel>()
     private lateinit var adapter: ChampAdapter
-
-
     private val binding get() = _binding!!
+
+    //These last two vars are help me for searchView when onQueryTextChange
+    private var champSize : Int = 0
+    private val championMapFilter =  mutableMapOf<String, ChampModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +55,8 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.svChamps.setOnQueryTextListener(this)
         champViewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding.progress.isVisible = it
+            binding.recycleChamps.isVisible = !it
+            binding.svChamps.isVisible = !it
         })
         callServiceGetUsers()
         return root
@@ -69,8 +74,8 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
                         championMap.putAll(champs)
                         initRecycleView(championMap)
                         adapter.notifyDataSetChanged()
-                        binding.recycleChamps.isVisible = true
-                        binding.svChamps.isVisible = true
+                        champSize = champs.keys.size
+                        championMapFilter.putAll(champs)
                     }
                 )
             }
@@ -124,13 +129,22 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String?): Boolean {
         if (newText.isNullOrEmpty()){
-            if (binding.recycleChamps.size == 1) {
-                binding.recycleChamps.isVisible = false
+            if (binding.recycleChamps.size < champSize) {
                 callServiceGetUsers()
-                hideKeyBoard()
             }
+        }else{
+            val searchText = newText.lowercase(Locale.getDefault())
+            championMap.clear()
+            println(championMapFilter)
+            championMapFilter.values.forEach {
+                if (it.name.lowercase(Locale.getDefault()).contains(searchText)){
+                    championMap.put(it.name, it)
+                }
+            }
+            initRecycleView(championMap)
+            adapter.notifyDataSetChanged()
         }
-        return true
+        return false
     }
 
     private fun hideKeyBoard(){

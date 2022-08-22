@@ -24,7 +24,7 @@ class GetFavoriteChampUseCase @Inject constructor( private val repository: Champ
         val champsToDb = repository.getFavoriteChampOfDb()
         for (i in champsToDb.indices) {
             val oneChamp = champsToDb[i]
-            champs.put(oneChamp.name, oneChamp)
+            champs[oneChamp.name] = oneChamp
         }
         return champs
     }
