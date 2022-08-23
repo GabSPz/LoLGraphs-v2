@@ -35,6 +35,7 @@ class ChampResultActivity : AppCompatActivity() {
             binding.progressChamp.isVisible = it
             binding.tvSkins.isVisible = !it
             binding.cvFavorite.isVisible = !it
+            binding.tvChampLore.isVisible = !it
         })
         getDataChamp()
     }
@@ -53,6 +54,7 @@ class ChampResultActivity : AppCompatActivity() {
         favoriteCheckBox(championDc.toDomain())
         if (championDc.enemyTips?.size!! > 1){
             binding.tvEnemyTips.isVisible = true
+            binding.tipsContainer.isVisible = true
             binding.tvEnemyTips1.text = championDc.enemyTips!!.first().toString()
             binding.tvEnemyTips2.text = championDc.enemyTips!!.last().toString()
         }

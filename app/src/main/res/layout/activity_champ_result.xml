@@ -4,29 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cbFav"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="12dp">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
 
         <TextView
             android:id="@+id/tVChampName"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:layout_marginTop="16dp"
             android:textColor="@color/black"
             android:textSize="40sp"
             android:textStyle="bold"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/ivSplashPhoto"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:text="Hola" />
 
         <ImageView
             android:id="@+id/ivSplashPhoto"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_marginVertical="16dp"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
             app:circularflow_defaultRadius="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,11 +41,15 @@
 
         <TextView
             android:id="@+id/tvChampLore"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:textAlignment="center"
+            android:textColor="@color/black"
             android:textSize="16sp"
+            android:background="@drawable/style_border_textview"
+            android:backgroundTint="@color/purple_200"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivSplashPhoto"
@@ -50,9 +59,9 @@
             android:id="@+id/tvSkins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="16dp"
             android:text="Skins"
-            android:textColor="#171717"
+            android:textColor="@color/black"
             android:textSize="35sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,50 +72,60 @@
             android:id="@+id/rvSkins"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvSkins" />
+            app:layout_constraintTop_toBottomOf="@+id/tvSkins"/>
 
         <TextView
             android:id="@+id/tvEnemyTips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginVertical="16dp"
             android:text="Tips"
-            android:textColor="#171717"
+            android:textColor="@color/black"
             android:textSize="35sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rvSkins" />
 
-        <TextView
-            android:id="@+id/tvEnemyTips1"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/tipsContainer"
+            android:visibility="gone"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/style_border_textview"
+            android:backgroundTint="@color/purple_200"
             app:layout_constraintTop_toBottomOf="@+id/tvEnemyTips"
-            tools:text="adwad" />
-
-        <TextView
-            android:id="@+id/tvEnemyTips2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="10dp"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvEnemyTips1"
-            tools:text="adwad" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvEnemyTips1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="8dp"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                tools:text="adwad" />
+
+            <TextView
+                android:id="@+id/tvEnemyTips2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="8dp"
+                android:textAlignment="center"
+                android:textSize="16sp"
+
+                tools:text="adwad" />
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progressChamp"
@@ -123,10 +142,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@android:drawable/btn_star"
-            android:checked="false"
             android:visibility="gone"
+            android:checked="false"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/ivSplashPhoto"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

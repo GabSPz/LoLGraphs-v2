@@ -74,6 +74,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
                         championMap.putAll(champs)
                         initRecycleView(championMap)
                         adapter.notifyDataSetChanged()
+
                         champSize = champs.keys.size
                         championMapFilter.putAll(champs)
                     }
@@ -130,7 +131,10 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextChange(newText: String?): Boolean {
         if (newText.isNullOrEmpty()){
             if (binding.recycleChamps.size < champSize) {
-                callServiceGetUsers()
+                championMap.clear()
+                championMap.putAll(championMapFilter)
+                initRecycleView(championMap)
+                adapter.notifyDataSetChanged()
             }
         }else{
             val searchText = newText.lowercase(Locale.getDefault())

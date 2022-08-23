@@ -13,7 +13,10 @@ class ChampSelectViewHolder(view: View):RecyclerView.ViewHolder(view) {
 
     fun render(skin: Skins, championModel: ChampionDc, onClickListener: (Skins) -> Unit) {
 
-        Picasso.get().load("http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${championModel.id}_${skin.num}.jpg").into(binding.ivSkinss)
+        Picasso.get().load(
+            "http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${championModel.id}_${skin.num}.jpg"
+        ).into(binding.ivSkinss)
+
         itemView.setOnClickListener { onClickListener(skin) }
     }
 }

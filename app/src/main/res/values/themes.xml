@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
     <style name="Theme.App.Starting" parent="Theme.SplashScreen" >
-        <item name="windowSplashScreenBackground">@color/purple_200</item>
+        <item name="windowSplashScreenBackground">@color/white</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash</item>
         <item name="windowSplashScreenAnimationDuration">300</item>
         <item name="postSplashScreenTheme">@style/Theme.LoLGraphs</item>
