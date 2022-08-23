@@ -23,21 +23,31 @@
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/ivSplashPhoto"
+            app:layout_constraintBottom_toTopOf="@+id/cvPhotoContainer"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="Hola" />
 
-        <ImageView
-            android:id="@+id/ivSplashPhoto"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvPhotoContainer"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginVertical="@dimen/activity_vertical_margin"
-            app:circularflow_defaultRadius="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="16dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             app:layout_constraintTop_toBottomOf="@+id/tVChampName"
-            tools:background="@color/black"
-            tools:ignore="ContentDescription" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tvChampLore">
+            <ImageView
+                android:id="@+id/ivSplashPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="215dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tVChampName"
+                tools:background="@color/black"
+                tools:ignore="ContentDescription" />
+        </androidx.cardview.widget.CardView>
+
 
         <TextView
             android:id="@+id/tvChampLore"
@@ -46,13 +56,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp"
             android:background="@drawable/style_border_textview"
-            android:backgroundTint="@color/purple_200"
+            android:backgroundTint="@color/secondary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivSplashPhoto"
+            app:layout_constraintTop_toBottomOf="@+id/cvPhotoContainer"
             tools:text="ADIADJAWJDUWHUHDUHAIDA" />
 
         <TextView
@@ -88,7 +98,8 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvSkins" />
+            app:layout_constraintTop_toBottomOf="@+id/rvSkins"
+            app:layout_constraintBottom_toTopOf="@+id/tipsContainer"/>
 
         <LinearLayout
             android:id="@+id/tipsContainer"
@@ -96,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/style_border_textview"
-            android:backgroundTint="@color/purple_200"
+            android:backgroundTint="@color/secondary"
             app:layout_constraintTop_toBottomOf="@+id/tvEnemyTips"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +118,7 @@
                 android:id="@+id/tvEnemyTips1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="8dp"
                 android:textAlignment="center"
@@ -118,9 +129,9 @@
                 android:id="@+id/tvEnemyTips2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="8dp"
+                android:layout_marginBottom="8dp"
                 android:textAlignment="center"
                 android:textSize="16sp"
 
@@ -141,12 +152,12 @@
             android:id="@+id/cvFavorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@android:drawable/btn_star"
+            android:button="@android:drawable/star_big_off"
             android:visibility="gone"
             android:checked="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/ivSplashPhoto"/>
+            app:layout_constraintBottom_toTopOf="@+id/cvPhotoContainer"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
