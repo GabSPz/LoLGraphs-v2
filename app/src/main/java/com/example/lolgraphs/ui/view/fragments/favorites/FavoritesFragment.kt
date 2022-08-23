@@ -48,6 +48,7 @@ class FavoritesFragment : Fragment() {
         champViewModel.isLoadingFav.observe(viewLifecycleOwner, Observer {
             binding.pbFavorite.isVisible = it
         })
+
         return root
     }
 
@@ -59,6 +60,7 @@ class FavoritesFragment : Fragment() {
                 champViewModel.champFav.observe(viewLifecycleOwner, Observer {
                     val champs = it?.toMutableMap() ?: emptyMap()
                     if (champs.isNotEmpty()) {
+                        getSwipeRefreshLayout()
                         championMap.clear()
                         championMap.putAll(champs)
                         initRecycleView(championMap)
@@ -68,6 +70,13 @@ class FavoritesFragment : Fragment() {
                     }
                 })
             }
+        }
+    }
+
+    private fun getSwipeRefreshLayout(){
+        binding.containerFav.setOnRefreshListener {
+            getFavoriteChamp()
+            binding.containerFav.isRefreshing = false
         }
     }
 

@@ -74,6 +74,8 @@ dependencies {
     kapt "androidx.room:room-compiler:2.4.0"
     //Splash
     implementation'androidx.core:core-splashscreen:1.0.0'
+    //swiperefreshlayout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
     //MockWebServer
     testImplementation("com.squareup.okhttp3:mockwebserver:4.10.0")
 
