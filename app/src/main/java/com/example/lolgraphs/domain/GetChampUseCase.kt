@@ -11,11 +11,6 @@ class GetChampUseCase @Inject constructor(private val  repository: ChampReposito
     suspend fun getOneChamp(query: String): Map<String, ChampionDc> = repository.getChamp(query)
 
     suspend fun getAllChamp():Map<String, ChampModel> = repository.getAllChamps()
-
-
-
-
-
 }
 
 

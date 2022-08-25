@@ -45,7 +45,7 @@ class FavoritesFragment : Fragment() {
         val root: View = binding.root
 
         getFavoriteChamp()
-        champViewModel.isLoadingFav.observe(viewLifecycleOwner, Observer {
+        champViewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding.pbFavorite.isVisible = it
         })
 
