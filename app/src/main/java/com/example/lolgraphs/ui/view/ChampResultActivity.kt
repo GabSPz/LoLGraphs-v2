@@ -105,7 +105,7 @@ class ChampResultActivity : AppCompatActivity() {
             championViewModel.getFavoriteChamp()
 
             runOnUiThread {
-                championViewModel.champFav.observe(this@ChampResultActivity, Observer {
+                championViewModel.champModel.observe(this@ChampResultActivity, Observer {
                     val checkChamp = it[champModel.name]
                     if (checkChamp?.name.isNullOrEmpty()) {
                         //nothing

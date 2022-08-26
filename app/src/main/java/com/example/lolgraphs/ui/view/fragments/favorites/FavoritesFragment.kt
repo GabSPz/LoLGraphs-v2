@@ -57,7 +57,7 @@ class FavoritesFragment : Fragment() {
             champViewModel.getFavoriteChamp()
 
             activity?.runOnUiThread {
-                champViewModel.champFav.observe(viewLifecycleOwner, Observer {
+                champViewModel.champModel.observe(viewLifecycleOwner, Observer {
                     val champs = it?.toMutableMap() ?: emptyMap()
                     if (champs.isNotEmpty()) {
                         getSwipeRefreshLayout()
