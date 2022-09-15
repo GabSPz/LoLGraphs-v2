@@ -38,8 +38,8 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     private val binding get() = _binding!!
 
     //These last two vars are help me for searchView when onQueryTextChange
-    private var champSize : Int = 0
-    private val championMapFilter =  mutableMapOf<String, ChampModel>()
+    private var champSize: Int = 0
+    private val championMapFilter = mutableMapOf<String, ChampModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,14 +47,15 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         savedInstanceState: Bundle?
     ): View {
         champViewModel =
-           ViewModelProvider(this).get(ChampViewModel::class.java)
+            ViewModelProvider(this).get(ChampViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        binding.shimmerContainer.startShimmer()
         binding.svChamps.setOnQueryTextListener(this)
         champViewModel.isLoading.observe(viewLifecycleOwner, Observer {
-            binding.progress.isVisible = it
+            binding.shimmerContainer.isVisible = it
             binding.recycleChamps.isVisible = !it
             binding.svChamps.isVisible = !it
         })
@@ -70,11 +71,16 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
                 champViewModel.champModel.observe(
                     viewLifecycleOwner, Observer {
                         val champs = it?.toMutableMap() ?: emptyMap()
-                        championMap.clear()
-                        championMap.putAll(champs)
-                        initRecycleView(championMap)
-                        adapter.notifyDataSetChanged()
+                        if (champs.isNotEmpty()) {
+                            championMap.clear()
+                            championMap.putAll(champs)
 
+                            initRecycleView(championMap)
+                            adapter.notifyDataSetChanged()
+                            binding.shimmerContainer.stopShimmer()
+                        } else {
+                            showError()
+                        }
                         champSize = champs.keys.size
                         championMapFilter.putAll(champs)
                     }
@@ -83,28 +89,28 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun initRecycleView(map: Map<String,ChampModel>){
-        adapter = ChampAdapter(map){champion -> onItemSelected(champion)}
+    private fun initRecycleView(map: Map<String, ChampModel>) {
+        adapter = ChampAdapter(map) { champion -> onItemSelected(champion) }
         binding.recycleChamps.layoutManager = LinearLayoutManager(this@HomeFragment.context)
         binding.recycleChamps.adapter = adapter
 
-        }
+    }
 
-    private fun onItemSelected(champion: ChampModel){
+    private fun onItemSelected(champion: ChampModel) {
         //go to champ result
         val intent = Intent(this.context, ChampResultActivity::class.java).apply {
-            putExtra("NAME_CHAMP",champion.name)
+            putExtra("NAME_CHAMP", champion.name)
         }
         startActivity(intent)
     }
 
-    private fun showError(){
+    private fun showError() {
         Toast.makeText(this@HomeFragment.context, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
     }
 
     //When the user use the search view, we coding the backend
 
-    private fun searchChampionById(query: String){
+    private fun searchChampionById(query: String) {
         val champModel = championMap[query]
         if (!champModel?.name.isNullOrEmpty()) {
             championMap.apply {
@@ -113,14 +119,14 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
             }
             initRecycleView(championMap)
             adapter.notifyDataSetChanged()
-        }else{
+        } else {
             showError()
         }
         hideKeyBoard()
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        if (!query.isNullOrEmpty()){
+        if (!query.isNullOrEmpty()) {
             val upperQuery = query.first().uppercase()
             val finalQuery = query.lowercase().replaceFirstChar { upperQuery }
             searchChampionById(finalQuery)
@@ -129,19 +135,19 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        if (newText.isNullOrEmpty()){
+        if (newText.isNullOrEmpty()) {
             if (binding.recycleChamps.size < champSize) {
                 championMap.clear()
                 championMap.putAll(championMapFilter)
                 initRecycleView(championMap)
                 adapter.notifyDataSetChanged()
             }
-        }else{
+        } else {
             val searchText = newText.lowercase(Locale.getDefault())
             championMap.clear()
             println(championMapFilter)
             championMapFilter.values.forEach {
-                if (it.name.lowercase(Locale.getDefault()).contains(searchText)){
+                if (it.name.lowercase(Locale.getDefault()).contains(searchText)) {
                     championMap[it.name] = it
                 }
             }
@@ -151,7 +157,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         return false
     }
 
-    private fun hideKeyBoard(){
+    private fun hideKeyBoard() {
         val imm = activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.container.windowToken, 0)
     }

@@ -4,13 +4,13 @@ package com.example.lolgraphs.ui.view.adapter
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lolgraphs.data.model.ChampionDc
-import com.example.lolgraphs.databinding.ActivityItemResultBinding
+import com.example.lolgraphs.databinding.ItemResultBinding
 import com.example.lolgraphs.domain.model.ChampModel
 import com.squareup.picasso.Picasso
 
 class ChampViewHolder(view: View):RecyclerView.ViewHolder(view) {
 
-    private val binding = ActivityItemResultBinding.bind(view)
+    private val binding = ItemResultBinding.bind(view)
 
     fun render(champModel: ChampModel, onCLick: (ChampModel) -> Unit) {
 
