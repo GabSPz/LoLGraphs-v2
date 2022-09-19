@@ -37,15 +37,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <include layout = "@layout/item_place_holder"/>
-                <include layout = "@layout/item_place_holder"/>
-                <include layout = "@layout/item_place_holder"/>
-                <include layout = "@layout/item_place_holder"/>
-                <include layout = "@layout/item_place_holder"/>
-                <include layout = "@layout/item_place_holder"/>
-                <include layout = "@layout/item_place_holder"/>
-                <include layout = "@layout/item_place_holder"/>
-                <include layout = "@layout/item_place_holder"/>
+                <include layout = "@layout/item_mini_champ_place_holder"/>
+                <include layout = "@layout/item_mini_champ_place_holder"/>
+                <include layout = "@layout/item_mini_champ_place_holder"/>
+                <include layout = "@layout/item_mini_champ_place_holder"/>
+                <include layout = "@layout/item_mini_champ_place_holder"/>
+                <include layout = "@layout/item_mini_champ_place_holder"/>
+                <include layout = "@layout/item_mini_champ_place_holder"/>
+                <include layout = "@layout/item_mini_champ_place_holder"/>
+                <include layout = "@layout/item_mini_champ_place_holder"/>
 
             </LinearLayout>
         </com.facebook.shimmer.ShimmerFrameLayout>
