@@ -13,8 +13,10 @@ import com.squareup.picasso.Picasso
 
 sealed class ChampViewHolder(binding: ViewBinding):RecyclerView.ViewHolder(binding.root) {
 
-    class ChampionResult(binding){
-
+    class ChampionResult(private val binding: ViewBinding): ChampViewHolder(binding){
+        fun bind(){
+            
+        }
     }
     //private val binding = ItemResultBinding.bind(view)
 //
