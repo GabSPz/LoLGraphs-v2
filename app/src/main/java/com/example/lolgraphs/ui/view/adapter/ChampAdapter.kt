@@ -1,7 +1,6 @@
 package com.example.lolgraphs.ui.view.adapter
 
 import android.view.LayoutInflater
-
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lolgraphs.R
@@ -20,9 +19,6 @@ class ChampAdapter(private var champMap: Map<String, ChampModel>, private var on
 
     override fun getItemCount(): Int = champMap.keys.size
 
-    override fun getItemViewType(position: Int): Int {
-        return
-    }
 }
 
 
