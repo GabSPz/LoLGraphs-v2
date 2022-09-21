@@ -19,6 +19,11 @@ class ChampAdapter(private var champMap: Map<String, ChampModel>, private var on
     }
 
     override fun getItemCount(): Int = champMap.keys.size
+
+    override fun getItemViewType(position: Int): Int {
+        return
+    }
 }
+
 
 
