@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.lolgraphs.core.extensions.HomeRecyclerViewItem
 import com.example.lolgraphs.databinding.FragmentHomeBinding
 import com.example.lolgraphs.domain.model.ChampModel
 import com.example.lolgraphs.ui.view.ChampResultActivity
@@ -35,7 +34,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var champViewModel: ChampViewModel
 
     private val championMap = mutableMapOf<String, ChampModel>()
-    private val adapter =  ChampAdapter()
+    private lateinit var adapter: ChampAdapter
     private val binding get() = _binding!!
 
     //These last two vars are help me for searchView when onQueryTextChange

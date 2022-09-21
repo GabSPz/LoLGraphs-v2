@@ -3,14 +3,11 @@ package com.example.lolgraphs.ui.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.lolgraphs.core.extensions.HomeRecyclerViewItem
 import com.example.lolgraphs.data.model.ChampionDc
-import com.example.lolgraphs.data.network.apiConsumer.APIService
 import com.example.lolgraphs.domain.GetChampUseCase
 import com.example.lolgraphs.domain.GetFavoriteChampUseCase
 import com.example.lolgraphs.domain.model.ChampModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,20 +25,11 @@ class ChampViewModel @Inject constructor(
     fun onCreate (){
         viewModelScope.launch {
             isLoading.postValue(true)
-            val champs  = async { getChampUseCase.getAllChamp().values.toList() }
             val resultChamps = getChampUseCase.getAllChamp()
             if (resultChamps.isNotEmpty()){
                 champModel.postValue(resultChamps)
                 isLoading.postValue(false)
             }
-            val champions = champs.await()
-
-            val homeListItems = mutableListOf<HomeRecyclerViewItem>()
-            if (champions.isNotEmpty()){
-                homeListItems.add(HomeRecyclerViewItem.ChampLoading())
-                homeListItems.addAll(HomeRecyclerViewItem.ChampResult(champions.map { HomeRecyclerViewItem.ChampResult(it.copy() }))
-            }
-
         }
     }
     fun onSearch(query: String) {
