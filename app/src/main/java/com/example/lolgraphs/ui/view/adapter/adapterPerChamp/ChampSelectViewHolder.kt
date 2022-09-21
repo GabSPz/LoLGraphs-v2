@@ -4,12 +4,12 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lolgraphs.data.model.ChampionDc
 import com.example.lolgraphs.data.model.subModel.Skins
-import com.example.lolgraphs.databinding.SkinsResultBinding
+import com.example.lolgraphs.databinding.ItemSkinsResultBinding
 import com.squareup.picasso.Picasso
 
 class ChampSelectViewHolder(view: View):RecyclerView.ViewHolder(view) {
 
-    private var binding = SkinsResultBinding.bind(view)
+    private var binding = ItemSkinsResultBinding.bind(view)
 
     fun render(skin: Skins, championModel: ChampionDc, onClickListener: (Skins) -> Unit) {
 
