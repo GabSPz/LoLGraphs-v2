@@ -20,6 +20,7 @@ import com.example.lolgraphs.domain.model.ChampModel
 import com.example.lolgraphs.ui.view.ChampResultActivity
 import com.example.lolgraphs.ui.view.adapter.ChampAdapter
 import com.example.lolgraphs.ui.viewModel.ChampViewModel
+import com.facebook.shimmer.ShimmerFrameLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -52,11 +53,10 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.shimmerContainer.startShimmer()
+        binding.recycleChamps.isVisible = true
+        initRecycleView(championMapFilter)
         binding.svChamps.setOnQueryTextListener(this)
         champViewModel.isLoading.observe(viewLifecycleOwner, Observer {
-            binding.shimmerContainer.isVisible = it
-            binding.recycleChamps.isVisible = !it
             binding.svChamps.isVisible = !it
         })
         callServiceGetUsers()
@@ -77,7 +77,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
                             initRecycleView(championMap)
                             adapter.notifyDataSetChanged()
-                            binding.shimmerContainer.stopShimmer()
+                            //binding.shimmerContainer.stopShimmer()
                         } else {
                             showError()
                         }

@@ -13,27 +13,45 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <View
-            android:id="@+id/ivChampPhoto"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@color/loading"
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
 
-        <View
-            android:id="@+id/tvHeroName"
-            android:layout_width="0dp"
-            android:layout_height="24dp"
-            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:background="@color/loading"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivChampPhoto"
-            app:layout_constraintTop_toTopOf="parent" />
+                <View
+                    android:id="@+id/ivChampPhoto"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@color/loading"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <View
+                    android:id="@+id/tvHeroName"
+                    android:layout_gravity="center"
+                    android:layout_width="200dp"
+                    android:layout_height="30dp"
+                    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                    android:background="@color/loading"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ivChampPhoto"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
