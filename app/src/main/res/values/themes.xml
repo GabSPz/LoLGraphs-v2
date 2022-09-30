@@ -19,10 +19,4 @@
         <item name="windowSplashScreenAnimationDuration">300</item>
         <item name="postSplashScreenTheme">@style/Theme.LoLGraphs</item>
     </style>
-    <style name="Theme.LoLGraphs.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-    <style name="Theme.LoLGraphs.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="Theme.LoLGraphs.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
