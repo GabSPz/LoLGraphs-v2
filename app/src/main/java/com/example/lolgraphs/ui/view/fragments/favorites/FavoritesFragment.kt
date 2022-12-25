@@ -65,6 +65,7 @@ class FavoritesFragment : Fragment() {
                         championMap.putAll(champs)
                         initRecycleView(championMap)
                         adapter.notifyDataSetChanged()
+                        binding.tvNoFavorites.isVisible = false
                     }else{
                         showText()
                     }
