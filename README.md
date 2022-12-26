@@ -1,15 +1,15 @@
 # LoLGraphs
 
-##Description
+## Description
 This is a league of legends's app, in which you can search a lot of champions with their respective details of all Runaterra Universe. 
 Also, you can save yours favorite champion for a fast consult of the champion detail. 
 
-##Version
+## Version
 It's a version beta, b 1.4(Under development)
 
-##Function graphs
+## Function graphs
 
-###Home Screen
+### Home Screen
 
 See all champions
 
@@ -17,9 +17,9 @@ See all champions
 
 Searching champions
 
-[Searching Champs](/functions_graphs/SS_SearchingChamps.png)
+(/functions_graphs/SS_SearchingChamps.png)
 
-###Champ Detail Screen
+### Champ Detail Screen
 
 View some champion details 
 
@@ -33,7 +33,7 @@ Touch the favorite button and save your champ
 
 [Saving Champ](/functions_graphs/SS_SaveFavorite.png)
 
-###Favorite Screen
+### Favorite Screen
 
 [Favorites Screen](/functions_graphs/SS_FavoritesScreen.png)
 
