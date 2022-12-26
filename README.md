@@ -13,27 +13,27 @@ It's a version beta, b 1.4(Under development)
 
 See all champions
 
-[HomeScreenLoading](/functions_graphs/SS_HomeScreenLoading.png) [HomeScreen](/functions_graphs/SS_HomeScreen.png)
+![Home Screen Loading](/functions_graphs/SS_HomeScreenLoading.png) ![Home Screen](/functions_graphs/SS_HomeScreen.png)
 
 Searching champions
 
-(/functions_graphs/SS_SearchingChamps.png)
+![Searching Champions](/functions_graphs/SS_SearchingChamps.png)
 
 ### Champ Detail Screen
 
 View some champion details 
 
-[ChampDetail Screen](/functions_graphs/SS_ChampDetail.png)
+![ChampDetail Screen](/functions_graphs/SS_ChampDetail.png)
 
 Click on the skin and the skin name will be displayed
 
-[Skins Name](/functions_graphs/SS_Skins.png)
+![Skins Name](/functions_graphs/SS_Skins.png)
 
 Touch the favorite button and save your champ
 
-[Saving Champ](/functions_graphs/SS_SaveFavorite.png)
+![Saving Champ](/functions_graphs/SS_SaveFavorite.png)
 
 ### Favorite Screen
 
-[Favorites Screen](/functions_graphs/SS_FavoritesScreen.png)
+![Favorites Screen](/functions_graphs/SS_FavoritesScreen.png)
 
