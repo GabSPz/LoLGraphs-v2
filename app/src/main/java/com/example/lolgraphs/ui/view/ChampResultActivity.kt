@@ -93,7 +93,7 @@ class ChampResultActivity : AppCompatActivity() {
 
         if (binding.cvFavorite.isChecked){
             championViewModel.onFavoriteChamp(true, champModel)
-            Toast.makeText(this,"Guardando en Favoritos",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"Saving in Favorites",Toast.LENGTH_SHORT).show()
         }else{
             championViewModel.onFavoriteChamp(false, champModel)
             Toast.makeText(this,"Eliminando de Favoritos",Toast.LENGTH_SHORT).show()
